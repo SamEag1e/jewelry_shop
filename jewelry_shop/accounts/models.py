@@ -16,7 +16,8 @@ class CustomUserManager(BaseUserManager):
         return user
 
     def create_superuser(self, phone_number, password=None, **extra_fields):
-        extra_fields["is_super_admin"] = True
+        extra_fields["is_product_admin"] = True
+        extra_fields["is_blog_admin"] = True
         extra_fields["is_staff"] = True
         extra_fields["is_superuser"] = True
 
@@ -31,7 +32,7 @@ class CustomUserManager(BaseUserManager):
 class CustomUser(AbstractUser):
     phone_number = models.CharField(max_length=15, unique=True)
     is_product_admin = models.BooleanField(default=False)
-    is_super_admin = models.BooleanField(default=False)
+    is_blog_admin = models.BooleanField(default=False)
     is_fellow_business = models.BooleanField(default=False)
 
     objects = CustomUserManager()
