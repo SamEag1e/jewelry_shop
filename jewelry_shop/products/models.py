@@ -32,10 +32,10 @@ class Collection(models.Model):
 
 class ProductImage(models.Model):
     image = models.ImageField(upload_to="product_images/")
-    product = models.ForeignKey("Products", on_delete=models.CASCADE)
+    product = models.ForeignKey("Product", on_delete=models.CASCADE)
 
 
-class Products(models.Model):
+class Product(models.Model):
     name = models.CharField(max_length=255)
     category = models.ManyToManyField(Category, related_name="products")
     created_at = models.DateTimeField(auto_now_add=True)
@@ -66,7 +66,9 @@ class Products(models.Model):
     image = models.ImageField(
         upload_to="product_images/", blank=True, null=True
     )
-    additional_images = models.ManyToManyField(ProductImage, blank=True)
+    additional_images = models.ManyToManyField(
+        ProductImage, blank=True, related_name="additional_images"
+    )
 
     # Tags and collections
     tags = models.ManyToManyField(Tag, blank=True)
